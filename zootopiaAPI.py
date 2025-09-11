@@ -16,3 +16,7 @@ def load_API_date():
     else:
         return "Error:", response.status_code, response.text
 
+def read_HTML(file_path):
+  """ Reads the data from the HTML file"""
+  with open(file_path, "r", encoding="utf-8") as handle:
+    return handle.read()
