@@ -6,7 +6,7 @@ def load_API_date():
     This function reads data from an API and loads through the get function in
     requests module.
     """
-    name = 'fox'
+    name = input("Enter a name of an animal: ")
     api_url = 'https://api.api-ninjas.com/v1/animals?name={}'.format(name)
     response = requests.get(api_url, headers={'X-Api-Key': 'Gyfnk0yFcglo+i9JYnYu6Q==0gk5md4xfMsblhcH'})
     if response.status_code == requests.codes.ok:
@@ -103,6 +103,8 @@ def main():
   with open("animals.html", "w") as animal_HTML:
     animal_HTML.write(new_HTML)
 
+  # Printing the successful website generation message
+  print("Website was successfully generated to the file animals.html.")
 
 if __name__ == "__main__":
   main()
