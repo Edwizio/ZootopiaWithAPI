@@ -1,21 +1,4 @@
-import requests
-import json
-
-def load_API_data(name):
-    """
-    This function reads data from an API and loads through the get function in
-    requests module.
-    """
-
-    api_url = 'https://api.api-ninjas.com/v1/animals?name={}'.format(name)
-    response = requests.get(api_url, headers={'X-Api-Key': 'Gyfnk0yFcglo+i9JYnYu6Q==0gk5md4xfMsblhcH'})
-
-    if response.status_code == requests.codes.ok:
-        data = response.json()
-        return data
-
-    else:
-        return "Error:", response.status_code, response.text
+import data_fetcher
 
 def read_HTML(file_path):
   """ Reads the data from the HTML file"""
@@ -60,7 +43,7 @@ def main():
   name = input("Enter a name of an animal: ")
 
   # Loading the animal's data from the API-ninja using requests module
-  animals_data = load_API_data(name)
+  animals_data = data_fetcher.fetch_data(name)
 
   old_HTML = read_HTML("animals_template.html")
 
