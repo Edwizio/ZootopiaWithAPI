@@ -1,18 +1,19 @@
 import requests
 import json
 
-def load_API_date():
+def load_API_data(name):
     """
     This function reads data from an API and loads through the get function in
     requests module.
     """
-    name = input("Enter a name of an animal: ")
+
     api_url = 'https://api.api-ninjas.com/v1/animals?name={}'.format(name)
     response = requests.get(api_url, headers={'X-Api-Key': 'Gyfnk0yFcglo+i9JYnYu6Q==0gk5md4xfMsblhcH'})
+
     if response.status_code == requests.codes.ok:
         data = response.json()
-        #print(json.dumps(data, indent=4, sort_keys=True))
         return data
+
     else:
         return "Error:", response.status_code, response.text
 
@@ -22,7 +23,7 @@ def read_HTML(file_path):
     return handle.read()
 
 
- def serialize_animal(animal):
+def serialize_animal(animal):
   """ This function serializes the whole data to be presented in the HTML
 
   """
@@ -55,18 +56,25 @@ def main():
   """
   This is the main function where the functions will be called and executed.
   """
+  # Asking the user to input tha animal name
+  name = input("Enter a name of an animal: ")
 
   # Loading the animal's data from the API-ninja using requests module
-  animals_data = load_API_date()
+  animals_data = load_API_data(name)
 
   old_HTML = read_HTML("animals_template.html")
 
   # to store the HTML text
   HTML_output = ""
 
-  # To generate the display info from the json file
-  for animal in animals_data:
-    HTML_output += serialize_animal(animal)
+  # Checking if the animal is present in the API or not
+  if len(animals_data) == 0:
+      HTML_output += f"<h2>The animal {name} doesn't exist.</h2> "
+
+  else:
+    # To generate the display info from the API
+        for animal in animals_data:
+            HTML_output += serialize_animal(animal)
 
   # Replacing the animal info is the old HTML Template
   new_HTML = old_HTML.replace("__REPLACE_ANIMALS_INFO__", HTML_output)
