@@ -1,4 +1,5 @@
 import os
+import requests
 from dotenv import load_dotenv
 
 # Loading the API_Key from the .env file
@@ -24,9 +25,9 @@ def fetch_data(animal_name):
     }
   },
   """
-  import requests
 
-  api_url = 'https://api.api-ninjas.com/v1/animals?name={}'.format(animal_name)
+
+  api_url = f'https://api.api-ninjas.com/v1/animals?name={animal_name}'
   response = requests.get(api_url, headers={'X-Api-Key': API_KEY})
 
   if response.status_code == requests.codes.ok:
@@ -34,4 +35,5 @@ def fetch_data(animal_name):
     return data
 
   else:
-    return "Error:", response.status_code, response.text
+    print(f"Error: {response.status_code, response.text}")
+    return []
